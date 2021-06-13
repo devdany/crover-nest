@@ -11,16 +11,8 @@ export type Scalars = {
   Float: number;
 };
 
-export type User = {
-  __typename?: 'User';
-  id: Scalars['Float'];
-  username: Scalars['String'];
-  password: Scalars['String'];
-};
-
 export type Query = {
   __typename?: 'Query';
-  user: User;
 };
 
 
@@ -30,15 +22,4 @@ export type QueryUserArgs = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createOneUser: User;
-};
-
-
-export type MutationCreateOneUserArgs = {
-  userInput: UserInput;
-};
-
-export type UserInput = {
-  username: Scalars['String'];
-  password: Scalars['Float'];
 };

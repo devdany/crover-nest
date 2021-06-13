@@ -1,8 +1,9 @@
 import { createConnection } from 'typeorm';
+import { Connection } from '../injectKeyStore'
 
 export const databaseProviders = [
   {
-    provide: 'DATABASE_CONNECTION',
+    provide: Connection.DATABASE_CONNECTION,
     useFactory: async () =>
       await createConnection({
         type: 'mysql',
@@ -10,8 +11,8 @@ export const databaseProviders = [
         port: 3306,
         username: 'root',
         password: 'rhkr1636',
-        database: 'wecandy',
-        entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+        database: 'crover-dev',
+        entities: [__dirname + '/../entities/*{.ts,.js}'],
         synchronize: true,
       }),
   },
