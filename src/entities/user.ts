@@ -1,5 +1,6 @@
-import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn } from 'typeorm';
 import { ObjectType, Field } from '@nestjs/graphql'
+import { ProfileEntity } from './profile'
 
 @ObjectType('User')
 @Entity({
@@ -15,17 +16,22 @@ export class UserEntity extends BaseEntity {
   createdAt: Date
 
   @Field()
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    nullable: true
+  })
   updatedAt?: Date
 
   @Field()
   @Column({
-    type: 'datetime'
+    type: 'datetime',
+    nullable: true
   })
   deletedAt?: Date
 
   @Field()
-  @Column()
+  @Column({
+    nullable: true
+  })
   name?: string
 
   @Field()
@@ -46,7 +52,6 @@ export class UserEntity extends BaseEntity {
   })
   username: string
 
-  @Field()
   @Column()
   password: string
 
@@ -61,6 +66,13 @@ export class UserEntity extends BaseEntity {
     default: false
   })
   emailVerified: boolean
+
+  @OneToOne(() => ProfileEntity, {
+    cascade: true
+  })
+  @JoinColumn()
+  @Field()
+  profile: ProfileEntity
 }
 
 // model User {

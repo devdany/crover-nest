@@ -27,6 +27,9 @@ export class UserService {
     return this.userRepository
       .create({
         ...userInput,
+        profile: {
+          introduce: ''
+        }
       })
       .save();
   }
