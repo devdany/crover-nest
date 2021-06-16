@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { UserModule } from './modules/user';
-import { ProfileModule } from './modules/profile'
+import { ProfileModule } from './modules/profile';
+import { JobModule } from './modules/job';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { ProfileModule } from './modules/profile'
     }),
     UserModule,
     ProfileModule,
+    JobModule,
   ],
 })
 export class AppModule {}

@@ -9,5 +9,5 @@ export class CreateUserInput {
   readonly password!: string;
 
   @Field()
-  readonly email!: string
+  readonly email!: string;
 }

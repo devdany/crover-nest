@@ -5,17 +5,14 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToOne,
-  JoinColumn,
 } from 'typeorm';
 import { ObjectType, Field } from '@nestjs/graphql';
-import { ProfileEntity } from './profile';
 
-@ObjectType('User')
+@ObjectType('Address')
 @Entity({
-  name: 'user',
+  name: 'address',
 })
-export class UserEntity extends BaseEntity {
+export class AdressEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   @Field()
   id: number;
@@ -38,48 +35,30 @@ export class UserEntity extends BaseEntity {
   deletedAt?: Date;
 
   @Field()
+  @Column()
+  country: string;
+
+  @Field()
   @Column({
     nullable: true,
   })
-  name?: string;
+  state?: string;
 
   @Field()
   @Column({
-    default: false,
+    nullable: true,
   })
-  isCertificated: boolean;
+  city?: string;
 
   @Field()
   @Column({
-    default: false,
+    nullable: true,
   })
-  isOnBoarding: boolean;
+  detail?: string;
 
   @Field()
   @Column({
-    unique: true,
+    nullable: true,
   })
-  username: string;
-
-  @Column()
-  password: string;
-
-  @Field()
-  @Column({
-    unique: true,
-  })
-  email: string;
-
-  @Field()
-  @Column({
-    default: false,
-  })
-  emailVerified: boolean;
-
-  @OneToOne(() => ProfileEntity, {
-    cascade: true,
-  })
-  @JoinColumn()
-  @Field()
-  profile: ProfileEntity;
+  postalCode?: string;
 }

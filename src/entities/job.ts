@@ -5,17 +5,22 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToOne,
+  ManyToOne,
   JoinColumn,
 } from 'typeorm';
 import { ObjectType, Field } from '@nestjs/graphql';
 import { ProfileEntity } from './profile';
 
-@ObjectType('User')
+enum JobType {
+  FULL_TIME,
+  PART_TIME,
+}
+
+@ObjectType('Job')
 @Entity({
-  name: 'user',
+  name: 'job',
 })
-export class UserEntity extends BaseEntity {
+export class JobEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   @Field()
   id: number;
@@ -41,45 +46,19 @@ export class UserEntity extends BaseEntity {
   @Column({
     nullable: true,
   })
-  name?: string;
+  position?: string;
 
   @Field()
   @Column({
-    default: false,
+    nullable: true,
   })
-  isCertificated: boolean;
+  experienceYears?: number;
 
   @Field()
-  @Column({
-    default: false,
-  })
-  isOnBoarding: boolean;
-
-  @Field()
-  @Column({
-    unique: true,
-  })
-  username: string;
-
   @Column()
-  password: string;
+  type: JobType;
 
-  @Field()
-  @Column({
-    unique: true,
-  })
-  email: string;
-
-  @Field()
-  @Column({
-    default: false,
-  })
-  emailVerified: boolean;
-
-  @OneToOne(() => ProfileEntity, {
-    cascade: true,
-  })
+  @ManyToOne(() => ProfileEntity, (profile) => profile.jobs)
   @JoinColumn()
-  @Field()
-  profile: ProfileEntity;
+  profile?: ProfileEntity;
 }

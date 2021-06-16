@@ -2,6 +2,33 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Address {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime!
+  country: String!
+  state: String!
+  city: String!
+  detail: String!
+  postalCode: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Job {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime!
+  position: String!
+  experienceYears: Float!
+  type: Float!
+}
+
 type Profile {
   id: Float!
   createdAt: DateTime!
@@ -12,12 +39,9 @@ type Profile {
   addressId: Float!
   jobId: Float!
   imageId: Float!
+  address: Address!
+  jobs: [Job!]!
 }
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
 
 type User {
   id: Float!

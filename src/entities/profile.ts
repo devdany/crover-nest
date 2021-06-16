@@ -1,75 +1,81 @@
-import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
-import { ObjectType, Field } from '@nestjs/graphql'
+import {
+  Entity,
+  BaseEntity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToOne,
+  JoinColumn,
+  OneToMany,
+} from 'typeorm';
+import { ObjectType, Field } from '@nestjs/graphql';
+import { AdressEntity } from './address';
+import { JobEntity } from './job';
 
 @ObjectType('Profile')
 @Entity({
-  name: 'profile'
+  name: 'profile',
 })
 export class ProfileEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   @Field()
-  id: number
+  id: number;
 
   @Field()
   @CreateDateColumn()
-  createdAt: Date
+  createdAt: Date;
 
   @Field()
   @UpdateDateColumn({
-    nullable: true
+    nullable: true,
   })
-  updatedAt?: Date
+  updatedAt?: Date;
 
   @Field()
   @Column({
     type: 'datetime',
-    nullable: true
+    nullable: true,
   })
-  deletedAt?: Date
+  deletedAt?: Date;
 
   @Field()
   @Column({
-    nullable: true
+    nullable: true,
   })
-  introduce?: string
+  introduce?: string;
 
   @Field()
   @Column({
-    nullable: true
+    nullable: true,
   })
-  tel?: string
+  tel?: string;
 
   @Field()
   @Column({
-    nullable: true
+    nullable: true,
   })
-  addressId?: number
+  addressId?: number;
 
   @Field()
   @Column({
-    nullable: true
+    nullable: true,
   })
-  jobId?: number
+  jobId?: number;
 
   @Field()
   @Column({
-    nullable: true
+    nullable: true,
   })
-  imageId?: number
+  imageId?: number;
+
+  @OneToOne(() => AdressEntity)
+  @JoinColumn()
+  @Field()
+  address?: AdressEntity;
+
+  @OneToMany(() => JobEntity, (job) => job.profile)
+  @JoinColumn()
+  @Field(() => [JobEntity])
+  jobs: JobEntity[];
 }
-
-// model Profile {
-//   id           Int       @id @default(autoincrement())
-//   createdAt    DateTime  @default(now())
-//   updatedAt    DateTime  @updatedAt
-//   deletedAt    DateTime?
-//   introduce    String?
-//   tel          String?
-//   address      Address?  @relation(fields: [addressId], references: [id])
-//   job          Job?      @relation(fields: [jobId], references: [id])
-//   profileImage Image?    @relation(fields: [imageId], references: [id])
-//   user         User[]
-//   addressId    Int?
-//   jobId        Int?
-//   imageId      Int?
-// }

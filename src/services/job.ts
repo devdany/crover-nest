@@ -1,12 +1,12 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { ProfileEntity } from '../entities/profile';
+import { JobEntity } from '../entities/job';
 import { Repository as RepositoryKeyStore } from '../injectKeyStore';
 
 @Injectable()
-export class ProfileService {
+export class JobService {
   constructor(
-    @Inject(RepositoryKeyStore.PROFILE_REPOSITORY)
-    private profileRepository: Repository<ProfileEntity>,
+    @Inject(RepositoryKeyStore.JOB_REPOSITORY)
+    private jopRepository: Repository<JobEntity>,
   ) {}
 }
