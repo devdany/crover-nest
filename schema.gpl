@@ -29,6 +29,81 @@ type Job {
   type: Float!
 }
 
+type Portfolio {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime!
+  projects: [Project!]!
+  user: User!
+}
+
+type Comment {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime!
+  user: User!
+  post: Post!
+  text: String!
+}
+
+type Post {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime!
+  title: String!
+  user: User!
+  tags: [Tag!]!
+  likeCount: Int!
+  thumbnail: Image!
+  images: [Image!]!
+  comments: [Comment!]!
+  content: String!
+  project: Project!
+}
+
+type Tag {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime!
+  name: String!
+}
+
+type Project {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime!
+  startedAt: DateTime!
+  endedAt: DateTime!
+  title: String!
+  description: String!
+  thumbnail: Image!
+  images: [Image!]!
+  location: Address!
+  members: [User!]!
+  portfolio: Portfolio!
+  tags: [Tag!]!
+}
+
+type Image {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime!
+  originalSrc: String!
+  pressedSrc: String!
+  filename: String!
+  mimetype: String!
+  encoding: String!
+  user: User!
+  project: Project!
+  post: Post!
+}
+
 type Profile {
   id: Float!
   createdAt: DateTime!
@@ -36,11 +111,27 @@ type Profile {
   deletedAt: DateTime!
   introduce: String!
   tel: String!
-  addressId: Float!
-  jobId: Float!
-  imageId: Float!
   address: Address!
   jobs: [Job!]!
+  image: Image!
+}
+
+type Message {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime!
+  sender: User!
+  receiver: User!
+  contest: String!
+}
+
+type Notification {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime!
+  user: User!
 }
 
 type User {
@@ -55,6 +146,14 @@ type User {
   email: String!
   emailVerified: Boolean!
   profile: Profile!
+  album: [Image!]!
+  projects: [Project!]!
+  portfolio: Portfolio!
+  posts: [Post!]!
+  comments: [Comment!]!
+  sendMessages: [Message!]!
+  receiveMessages: [Message!]!
+  notifications: [Notification!]!
 }
 
 type Query {

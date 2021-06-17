@@ -7,9 +7,19 @@ import {
   UpdateDateColumn,
   OneToOne,
   JoinColumn,
+  OneToMany,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import { ObjectType, Field } from '@nestjs/graphql';
 import { ProfileEntity } from './profile';
+import { ImageEntity } from './image';
+import { ProjectEntity } from './project';
+import { PortfolioEntity } from './portfolio';
+import { PostEntity } from './post';
+import { CommentEntity } from './comment';
+import { MessageEntity } from './message';
+import { NotificationEntity } from './notification';
 
 @ObjectType('User')
 @Entity({
@@ -82,4 +92,39 @@ export class UserEntity extends BaseEntity {
   @JoinColumn()
   @Field()
   profile: ProfileEntity;
+
+  @OneToMany(() => ImageEntity, (image) => image.user)
+  @Field(() => [ImageEntity])
+  @JoinColumn()
+  album: ImageEntity[];
+
+  @ManyToMany(() => ProjectEntity, (project) => project.members)
+  @Field(() => [ProjectEntity])
+  @JoinTable()
+  projects: ProjectEntity[];
+
+  @OneToOne(() => PortfolioEntity)
+  @Field(() => PortfolioEntity)
+  @JoinColumn()
+  portfolio: PortfolioEntity;
+
+  @OneToMany(() => PostEntity, (post) => post.user)
+  @Field(() => [PostEntity])
+  posts: PostEntity[];
+
+  @OneToMany(() => CommentEntity, (comment) => comment.user)
+  @Field(() => [CommentEntity])
+  comments: CommentEntity[];
+
+  @OneToMany(() => MessageEntity, (message) => message.sender)
+  @Field(() => [MessageEntity])
+  sendMessages: MessageEntity[];
+
+  @OneToMany(() => MessageEntity, (message) => message.receiver)
+  @Field(() => [MessageEntity])
+  receiveMessages: MessageEntity[];
+
+  @OneToMany(() => NotificationEntity, (notification) => notification.user)
+  @Field(() => [NotificationEntity])
+  notifications: NotificationEntity[];
 }

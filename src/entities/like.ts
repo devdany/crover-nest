@@ -7,22 +7,15 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
-  OneToOne,
 } from 'typeorm';
 import { ObjectType, Field } from '@nestjs/graphql';
-import { ProfileEntity } from './profile';
-import { CompanyEntity } from './company';
+import { PostEntity } from './post';
 
-enum JobType {
-  FULL_TIME,
-  PART_TIME,
-}
-
-@ObjectType('Job')
+@ObjectType('Like')
 @Entity({
-  name: 'job',
+  name: 'like',
 })
-export class JobEntity extends BaseEntity {
+export class LikeEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   @Field()
   id: number;
@@ -46,25 +39,11 @@ export class JobEntity extends BaseEntity {
 
   @Field()
   @Column({
-    nullable: true,
+    unique: true,
   })
-  position?: string;
+  name: string;
 
-  @Field()
-  @Column({
-    nullable: true,
-  })
-  experienceYears?: number;
-
-  @Field()
-  @Column()
-  type: JobType;
-
-  @ManyToOne(() => ProfileEntity, (profile) => profile.jobs)
+  @ManyToOne(() => PostEntity, (post) => post.likes)
   @JoinColumn()
-  profile?: ProfileEntity;
-
-  @OneToOne(() => CompanyEntity)
-  @JoinColumn()
-  company?: CompanyEntity;
+  post?: PostEntity;
 }

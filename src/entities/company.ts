@@ -7,18 +7,15 @@ import {
   UpdateDateColumn,
   OneToOne,
   JoinColumn,
-  OneToMany,
 } from 'typeorm';
 import { ObjectType, Field } from '@nestjs/graphql';
 import { AdressEntity } from './address';
-import { JobEntity } from './job';
-import { ImageEntity } from './image';
 
-@ObjectType('Profile')
+@ObjectType('Company')
 @Entity({
-  name: 'profile',
+  name: 'company',
 })
-export class ProfileEntity extends BaseEntity {
+export class CompanyEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   @Field()
   id: number;
@@ -41,29 +38,15 @@ export class ProfileEntity extends BaseEntity {
   deletedAt?: Date;
 
   @Field()
-  @Column({
-    nullable: true,
-  })
-  introduce?: string;
+  @Column()
+  name: string;
 
   @Field()
-  @Column({
-    nullable: true,
-  })
-  tel?: string;
+  @Column()
+  companyCode?: string;
 
+  @Field()
+  @JoinColumn()
   @OneToOne(() => AdressEntity)
-  @JoinColumn()
-  @Field()
-  address?: AdressEntity;
-
-  @OneToMany(() => JobEntity, (job) => job.profile)
-  @JoinColumn()
-  @Field(() => [JobEntity])
-  jobs: JobEntity[];
-
-  @OneToOne(() => ImageEntity)
-  @JoinColumn()
-  @Field()
-  image?: ImageEntity;
+  address: AdressEntity;
 }
